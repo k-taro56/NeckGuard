@@ -11,10 +11,17 @@ Welcome to your new app.
 
 <p role="status">Device Orientation: @s</p>
 
+<button class="btn btn-primary" @onclick="RequestPermission">Request permission</button>
+
 @code {
-    private DotNetObjectReference<Index> objectReference;
+    private DotNetObjectReference<Index>? objectReference;
 
     string s = "";
+
+    private Task RequestPermission()
+    {
+        return JS.InvokeVoidAsync("accelerometer.requestPermission").AsTask();
+    }
 
     // コンポーネントの初期化時に呼び出される
     protected override Task OnInitializedAsync()
