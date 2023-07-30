@@ -1,0 +1,44 @@
+﻿@page "/"
+@inject IJSRuntime JS
+
+<PageTitle>Index</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<tr>
+    <td>@x</td>
+    <td>@y</td>
+    <td>@z</td>
+</tr>
+
+@code {
+    private DotNetObjectReference<Index> objectReference;
+
+    private double? x;
+    private double? y;
+    private double? z;
+
+    private async Task JSInvoke()
+    {
+        await JS.InvokeVoidAsync("downloadFileFromStream");
+    }
+
+    // コンポーネントの初期化時に呼び出される
+    protected override Task OnInitializedAsync()
+    {
+        objectReference = DotNetObjectReference.Create(this);
+        return JS.InvokeVoidAsync("accelerometer.initialize", objectReference).AsTask();
+    }
+
+    [JSInvokable]
+    public void OnDeviceMotion(double? x, double? y, double? z)
+    {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+}
