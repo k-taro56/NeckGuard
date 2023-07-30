@@ -2,11 +2,12 @@ window.accelerometer = {
     initialize: function (dotnetHelper) {
         if (window.DeviceMotionEvent) {
             window.addEventListener('deviceorientation', function (event) {
-                console.log('Acceleration:', event); // ‚±‚±‚Å’l‚ğƒƒO‚Éo—Í
-                dotnetHelper.invokeMethodAsync('OnDeviceMotion', event.alpha, event.beta, event.gamma);
+                const s = JSON.stringify(event);
+                console.log('Orientation:', s); // ã“ã“ã§å€¤ã‚’ãƒ­ã‚°ã«å‡ºåŠ›
+                dotnetHelper.invokeMethodAsync('OnDeviceMotion', s);
             });
         } else {
-            console.log('DeviceMotionEvent is not supported on this device'); // ƒTƒ|[ƒg‚³‚ê‚Ä‚¢‚È‚¢ê‡‚ÌƒƒO
+            console.log('DeviceOrientationEvent is not supported on this device'); // ã‚µãƒãƒ¼ãƒˆã•ã‚Œã¦ã„ãªã„å ´åˆã®ãƒ­ã‚°
         }
     }
 };

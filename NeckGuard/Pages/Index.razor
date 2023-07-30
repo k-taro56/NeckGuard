@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/"
 @inject IJSRuntime JS
 
 <PageTitle>Index</PageTitle>
@@ -9,23 +9,12 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<tr>
-    <td>@x</td>
-    <td>@y</td>
-    <td>@z</td>
-</tr>
+<p role="status">Device Orientation: @s</p>
 
 @code {
     private DotNetObjectReference<Index> objectReference;
 
-    private double? x;
-    private double? y;
-    private double? z;
-
-    private async Task JSInvoke()
-    {
-        await JS.InvokeVoidAsync("downloadFileFromStream");
-    }
+    string s = "";
 
     // コンポーネントの初期化時に呼び出される
     protected override Task OnInitializedAsync()
@@ -35,10 +24,10 @@ Welcome to your new app.
     }
 
     [JSInvokable]
-    public void OnDeviceMotion(double? x, double? y, double? z)
+    public void OnDeviceMotion(string s)
     {
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        Console.WriteLine($"orientation: {s}");
+        this.s = s;
+        StateHasChanged();
     }
 }
